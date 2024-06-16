@@ -53,4 +53,8 @@ export class TripListingComponent implements OnInit {
     this.getStuff();
   }
 
+  onDelete(tripCode: string): void {
+    this.ngOnInit();
+  }
+
 }

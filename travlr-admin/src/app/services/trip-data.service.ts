@@ -29,4 +29,10 @@ export class TripDataService {
     // console.log('Inside TripDataService::addTrips');
     return this.http.put<Trip>(this.url + '/' + formData.code, formData);
   }
+  
+  deleteTrip(tripCode: string) : Observable<Trip> {
+    // console.log('Inside TripDataService::deleteTrips');
+    console.log("Deleting: " + tripCode);
+    return this.http.delete<Trip>(this.url + '/' + tripCode);
+  }
 }

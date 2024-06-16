@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Trip } from '../models/trip';
+
+import { TripDataService } from '../services/trip-data.service';
 
 @Component({
   selector: 'app-trip-card',
@@ -13,8 +15,9 @@ import { Trip } from '../models/trip';
 export class TripCardComponent {
 
   @Input('trip') trip: any;
+  @Output() notifyDelete: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private tripDataService: TripDataService) {}
 
   ngOnInit(): void {
     this.trip.start = this.trip.start.split('T')[0];
@@ -25,5 +28,21 @@ export class TripCardComponent {
     localStorage.setItem('tripCode', trip.code);
     this.router.navigate(['edit-trip']);
   }
-}
 
+  public deleteTrip(trip: Trip) {
+    console.log("Deleting trip: " + JSON.stringify(trip));
+    localStorage.removeItem('tripCode');
+    localStorage.setItem('tripCode', trip.code);
+    this.tripDataService.deleteTrip(trip.code)
+      .subscribe({
+        next: (value: any) => {
+          console.log("Deleted trip: " + trip.code);
+          this.notifyDelete.emit(this.trip.code);
+        },
+        error: (error: any) => {
+          console.log("Error: " + JSON.stringify(error))
+        }
+      });
+    }
+
+}
