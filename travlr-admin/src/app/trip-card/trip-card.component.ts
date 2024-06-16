@@ -16,7 +16,8 @@ export class TripCardComponent {
 
   constructor(private router: Router) {}
 
-  ngOnInIt(): void {
+  ngOnInit(): void {
+    this.trip.start = this.trip.start.split('T')[0];
   }
 
   public editTrip(trip: Trip) {

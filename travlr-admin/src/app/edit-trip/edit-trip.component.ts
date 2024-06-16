@@ -32,7 +32,7 @@ export class EditTripComponent implements OnInit {
     // Retrieve stashed trip ID
     let tripCode = localStorage.getItem("tripCode");
     if (!tripCode) {
-      alert("Something wrong, couldn't find where I stashedtripCode!");
+      alert("Something wrong, couldn't find where I stashed tripCode!");
       this.router.navigate(['']);
       return;
     }
@@ -54,6 +54,11 @@ export class EditTripComponent implements OnInit {
         next: (value: any) => {
           this.trip = value;
           // Populate our record into the form
+
+          //  Playing with date format
+          console.log("Value before patch: " + JSON.stringify(value[0]))
+          // Remove time from Start, so the date picker is happy.
+          value[0].start = value[0].start.split("T")[0];
           this.editForm.patchValue(value[0]);
           if (!value) {
             this.message = 'No Trip Retrieved!';

@@ -44,6 +44,7 @@
         </div>
         <div class="form-group">
             <label>Resort:</label>
+
             <input type="text" formControlName="resort" placeholder="Resort" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['resort'].errors
 }">
             <div *ngIf="submitted && f['resort'].errors">
