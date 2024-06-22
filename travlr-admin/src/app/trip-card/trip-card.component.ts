@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Trip } from '../models/trip';
 
 import { TripDataService } from '../services/trip-data.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-trip-card',
@@ -17,10 +18,15 @@ export class TripCardComponent {
   @Input('trip') trip: any;
   @Output() notifyDelete: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router, private tripDataService: TripDataService) {}
+  constructor(private router: Router, private authenticationService: AuthenticationService, private tripDataService: TripDataService) {}
 
   ngOnInit(): void {
     this.trip.start = this.trip.start.split('T')[0];
+  }
+
+  public isLoggedIn()
+  {
+  return this.authenticationService.isLoggedIn();
   }
 
   public editTrip(trip: Trip) {
